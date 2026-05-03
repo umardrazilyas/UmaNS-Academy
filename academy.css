@@ -1,0 +1,94 @@
+/* The container that holds all teacher cards */
+  .container {
+    display: flex;          /* Enables horizontal layout */
+    flex-wrap: wrap;        /* Allows items to move to next line if needed */
+    gap: 20px;              /* Adds spacing between the cards */
+    justify-content: center; /* Centers the cards on the page */
+    font-family: sans-serif;
+  }
+
+  /* Styling for each individual teacher box */
+  .teacher {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    min-width: 200px;       /* Ensures boxes have a consistent size */
+    text-align: center;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+  }
+
+  .teacher h3 {
+    margin: 0 0 10px 0;
+    color: #2c3e50;
+  }
+
+  .teacher p {
+    margin: 0;
+    color: #666;
+  }
+  body {
+    font-family: Arial;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: #2c3e50;
+    color: white;
+    padding: 15px;
+}
+
+nav a {
+    color: white;
+    margin: 10px;
+    text-decoration: none;
+}
+
+.hero {
+    text-align: center;
+    padding: 50px;
+    background: #ecf0f1;
+}
+
+
+/* Admission Form Styling */
+  .form-section {
+    text-align: center; /* Centers the Heading */
+    font-family: sans-serif;
+    max-width: 400px;
+    margin: 0 auto; /* Centers the entire form block on the page */
+    padding: 20px;
+    border-top: 2px solid #eee; /* Visual separator */
+  }
+
+  #admissionForm input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+  }
+
+  #admissionForm button {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  #admissionForm button:hover {
+    background-color: #45a049;
+  }
+
+          body { font-family: Arial; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid black; padding: 10px; text-align: center; }
+        button { padding: 5px 10px; }

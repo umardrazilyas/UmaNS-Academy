@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Umar & Nabeel Science Academy</title>
+    <link rel="stylesheet" href="academy.css">
+</head>
+
+<body>
+
+<header>
+    <h1>UNS Academy</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="courses.html">Courses</a>
+        <a href="teachers.html">Teachers</a>
+        <a href="admission.html">Admission</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h2>Welcome to Our Academy</h2>
+    <p>Best place for quality education</p>
+</section>
+
+<script src="academy.js"></script>
+<h1>About Us</h1>
+<p>We provide quality education for students from 9th to 12th.</p>
+<h1>Our Courses</h1>
+<ul>
+    <li>FSc</li>
+    <li>ICS</li>
+    <li>FA</li>
+</ul>
+<hr>
+
+<h2>Registered Students</h2>
+<table border="1" style="width:100%; text-align:left; border-collapse: collapse;">
+    <thead>
+        <tr style="background-color: #eee;">
+            <th>Name</th>
+            <th>Class</th>
+            <th>Phone</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="studentTable">
+        <!-- ڈیٹا یہاں نظر آئے گا -->
+    </tbody>
+</table>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCS8MgIDU5xt4QyDNJ1u0jSIDBdH2dtvoU",
+    authDomain: "uns-academy.firebaseapp.com",
+    projectId: "uns-academy",
+    storageBucket: "uns-academy.firebasestorage.app",
+    messagingSenderId: "952776389492",
+    appId: "1:952776389492:web:2bdcb899e620f40ae4b221"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const table = document.getElementById("studentTable");
+
+  // 1. ڈیٹا لوڈ کرنے کا فنکشن
+  async function loadData() {
+    table.innerHTML = "<tr><td colspan='4'>Loading data...</td></tr>";
+    try {
+        const querySnapshot = await getDocs(collection(db, "students"));
+        table.innerHTML = "";
+        querySnapshot.forEach((docSnap) => {
+          const data = docSnap.data();
+          let row = `
+            <tr>
+              <td>${data.name}</td>
+              <td>${data.class}</td>
+              <td>${data.phone}</td>
+              <td>
+                <button onclick="deleteStudent('${docSnap.id}')" style="background:red; color:white; cursor:pointer;">Delete</button>
+              </td>
+            </tr>
+          `;
+          table.innerHTML += row;
+        });
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+  }
+
+  // 2. ڈیٹا سیو کرنے کا فنکشن (جو آپ سے مس ہو گیا تھا)
+  document.getElementById("admissionForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = document.getElementById("name").value;
+    const className = document.getElementById("class").value;
+    const phone = document.getElementById("phone").value;
+
+    try {
+      await addDoc(collection(db, "students"), {
+        name: name,
+        class: className,
+        phone: phone,
+        timestamp: new Date()
+      });
+      alert("Data Saved Successfully!");
+      document.getElementById("admissionForm").reset();
+      loadData(); // سیو ہونے کے بعد لسٹ اپ ڈیٹ کریں
+    } catch (error) {
+      alert("Error: " + error.message);
+    }
+  });
+
+  // 3. ڈیلیٹ کرنے کا فنکشن
+  window.deleteStudent = async function(id) {
+    if(confirm("Are you sure?")) {
+        await deleteDoc(doc(db, "students", id));
+        alert("Deleted!");
+        loadData();
+    }
+  }
+
+  // پیج لوڈ ہوتے ہی ڈیٹا دکھائیں
+  loadData();
+</script>
+<h1>Admission Form</h1>
+
+<form id="admissionForm">
+    <input type="text" id="name" placeholder="Name" required><br>
+    <input type="text" id="class" placeholder="Class" required><br>
+    <input type="text" id="phone" placeholder="Phone Number" required><br>
+    <button type="submit">Submit</button>
+</form>
+<h1>Our Teachers</h1>
+<div class="container">
+<div class="teacher">
+    <h3>Sir Ali Raza</h3>
+    <p>Math Teacher</p>
+</div>
+
+<div class="teacher">
+    <h3>Sir Nabeel</h3>
+    <p>Physics Teacher</p>
+</div>
+<div class="teacher">
+    <h3>Sir Nadeem</h3>
+    <p>Urdu/Pak.S/Islmiyat Teacher</p>
+</div>
+<div class="teacher">
+    <h3>Sir Nasir</h3>
+    <p>Math Teacher</p>
+</div>
+<div class="teacher">
+    <h3>Sir Naeem</h3>
+    <p>Biology Teacher</p>
+</div>
+<div class="teacher">
+    <h3>Sir Muhammad Umar Draz</h3>
+    <p>Computer Teacher</p>
+</div>
+<div class="teacher">
+    <h3>Sir Abeel</h3>
+    <p>Chemistry Teacher</p>
+</div>
+
+
+</body>
+</html>
